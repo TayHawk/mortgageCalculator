@@ -48,7 +48,7 @@ function response() {
     ).toLowerCase();
   }
 
-  return answer;
+  return answer[0];
 }
 
 function getMonthlyInterestRate(apr) {
@@ -93,8 +93,6 @@ do {
   );
 
   displayPaymentSummary(loanAmount, apr, loanDuration, monthlyPayments);
-
-  answer = response();
-} while (answer[0] === "y");
+} while (response[0] === "y");
 
 alert("Ok Goodbye 🤙\n\nThank you for using the Mortgage Calculator app 😁");
