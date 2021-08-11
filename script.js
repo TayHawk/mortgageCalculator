@@ -56,6 +56,28 @@ function getMonthlyInterestRate(apr) {
   let monthlyInterestRate = Number(aprDecimal / 12);
   return monthlyInterestRate;
 }
+function displayPaymentSummary(loanAmount, apr, loanDuration, monthlyPayments) {
+  alert(
+    `Your loan amount is:$${loanAmount}\n Your APR is: ${apr}%\n Your loan duration in years is: ${loanDuration}\nYour monthly payments are: $${monthlyPayments.toFixed(
+      2
+    )}`
+  );
+}
+function getMonthlyPayments(
+  monthlyInterestRate,
+  loanAmount,
+  loanDurationinMonths
+) {
+  let monthlyPayments;
+  if (monthlyInterestRate === 0) {
+    return (monthlyPayments = loanAmount / loanDurationinMonths);
+  } else {
+    return (monthlyPayments =
+      loanAmount *
+      (monthlyInterestRate /
+        (1 - Math.pow(1 + monthlyInterestRate, -loanDurationinMonths))));
+  }
+}
 
 do {
   let loanAmount = getLoan();
@@ -64,28 +86,15 @@ do {
   let monthlyInterestRate = getMonthlyInterestRate(apr);
   let loanDurationinMonths = loanDuration * 12;
 
-  function getMonthlyPayments() {
-    let monthlyPayments;
-    if (monthlyInterestRate === 0) {
-      return (monthlyPayments = loanAmount / loanDurationinMonths);
-    } else {
-      return (monthlyPayments =
-        loanAmount *
-        (monthlyInterestRate /
-          (1 - Math.pow(1 + monthlyInterestRate, -loanDurationinMonths))));
-    }
-  }
+  let monthlyPayments = getMonthlyPayments(
+    monthlyInterestRate,
+    loanAmount,
+    loanDurationinMonths
+  );
 
-  let monthlyPayments = getMonthlyPayments();
+  displayPaymentSummary(loanAmount, apr, loanDuration, monthlyPayments);
 
-  function displayPaymentSummary() {
-    alert(
-      `Your loan amount is:$${loanAmount}\n Your APR is: ${apr}%\n Your loan duration in years is: ${loanDuration}\nYour monthly payments are: $${monthlyPayments.toFixed(
-        2
-      )}`
-    );
-  }
-  displayPaymentSummary();
   answer = response();
 } while (answer[0] === "y");
+
 alert("Ok Goodbye 🤙\n\nThank you for using the Mortgage Calculator app 😁");
